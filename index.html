@@ -2,27 +2,31 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>UniqueDroid ESP32 Flasher</title>
+    <title>Unique ESP32 Flasher</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark light" />
+    <link rel="icon" type="image/png" sizes="32x32" href="static/favicon-32.png" />
+    <link rel="apple-touch-icon" href="static/apple-touch-icon.png" />
     <script
       type="module"
       src="https://cdn.jsdelivr.net/npm/esp-web-tools@10/dist/web/install-button.js"
     ></script>
     <style>
       :root {
-        /* Placeholder palette - swap once the project logo is in. */
-        --accent: #2ac7d8;
-        --accent-2: #6c5ce7;
-        --bg: #0d1015;
-        --bg-grad: #141a24;
-        --surface: #171c24;
-        --surface-hover: #1d2430;
-        --border: #262f3d;
-        --text: #e7edf5;
-        --text-dim: #8e9bac;
-        --text-mute: #aab6c4;
-        --warn: #f5b942;
+        /* From the project badge: cyan/blue circuit ring, warm orange
+           "flashing" accent, deep navy background. */
+        --accent: #4fc3f7;
+        --accent-2: #0f6fa8;
+        --spark: #ff8f3d;
+        --bg: #070c13;
+        --bg-grad: #0d2338;
+        --surface: #101823;
+        --surface-hover: #16202e;
+        --border: #22303f;
+        --text: #e7f3fb;
+        --text-dim: #8ea3b5;
+        --text-mute: #a9bcca;
+        --warn: #f5a93c;
         --ok: #4ade80;
       }
 
@@ -61,15 +65,17 @@
       }
 
       .logo-dot {
-        width: 40px;
-        height: 40px;
-        border-radius: 12px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
         flex: none;
-        background: linear-gradient(135deg, var(--accent), var(--accent-2));
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
+        display: block;
+      }
+      .logo-dot img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
       }
 
       h1 {
@@ -134,7 +140,7 @@
         background: linear-gradient(135deg, var(--accent), var(--accent-2));
         padding: 12px 26px;
         border-radius: 999px;
-        box-shadow: 0 6px 18px -6px #2ac7d866;
+        box-shadow: 0 6px 18px -6px #4fc3f766;
         transition:
           transform 0.12s ease,
           box-shadow 0.12s ease,
@@ -143,7 +149,7 @@
 
       .flash-btn:hover {
         filter: brightness(1.08);
-        box-shadow: 0 8px 22px -6px #2ac7d888;
+        box-shadow: 0 8px 22px -6px #4fc3f788;
         transform: translateY(-1px);
       }
 
@@ -155,6 +161,7 @@
       .flash-btn::before {
         content: "\26A1";
         margin-right: 8px;
+        color: var(--spark);
       }
 
       .banner {
@@ -162,8 +169,8 @@
         border-radius: 16px;
         padding: 18px 22px;
         margin-bottom: 22px;
-        border: 1px solid #f5b94255;
-        background: #f5b94214;
+        border: 1px solid #f5a93c55;
+        background: #f5a93c14;
       }
 
       .banner h2 {
@@ -192,8 +199,8 @@
   <body>
     <div class="wrap">
       <header>
-        <div class="logo-dot">⚡</div>
-        <h1>UniqueDroid ESP32 Flasher</h1>
+        <div class="logo-dot"><img src="static/logo.jpg" alt="Unique ESP32 Flasher logo" /></div>
+        <h1>Unique ESP32 Flasher</h1>
       </header>
       <p class="sub">
         Flash a fresh (or already-flashed) ESP32 board directly from this
@@ -247,6 +254,7 @@
       <p class="req">
         Currently supports the LilyGO T-Display S3 board. Powered by
         <a href="https://github.com/esphome/esp-web-tools">ESP Web Tools</a>.
+        Powered by JanGadget.
       </p>
     </div>
   </body>
