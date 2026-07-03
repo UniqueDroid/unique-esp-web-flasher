@@ -7,7 +7,7 @@
     <meta name="color-scheme" content="dark light" />
     <script
       type="module"
-      src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"
+      src="https://cdn.jsdelivr.net/npm/esp-web-tools@10/dist/web/install-button.js"
     ></script>
     <style>
       body {
@@ -74,6 +74,21 @@
         page - no PlatformIO or IDE required. Works in Chrome/Edge over
         USB.
       </p>
+
+      <div id="compat-warning" class="card" style="display: none; border-color: #f5b942">
+        <h2 style="color: #f5b942">Not supported here</h2>
+        <p>
+          This needs the Web Serial API, which only exists in desktop
+          Chrome or Edge (not on phones/tablets, and not in Firefox or
+          Safari on any device). Open this page on a desktop with Chrome
+          or Edge and connect the board via USB.
+        </p>
+      </div>
+      <script>
+        if (!("serial" in navigator)) {
+          document.getElementById("compat-warning").style.display = "block";
+        }
+      </script>
 
       <div class="card">
         <h2>pfSense Status</h2>
