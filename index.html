@@ -65,17 +65,14 @@
       }
 
       .logo-dot {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
+        height: 96px;
         flex: none;
         display: block;
       }
       .logo-dot img {
-        width: 100%;
         height: 100%;
-        border-radius: 50%;
-        object-fit: cover;
+        width: auto;
+        display: block;
       }
 
       h1 {
@@ -125,6 +122,55 @@
 
       .card a:hover {
         text-decoration: underline;
+      }
+
+      .version-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .version-badge {
+        display: inline-block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        color: var(--accent);
+        background: #4fc3f71a;
+        border: 1px solid #4fc3f73a;
+        padding: 3px 10px;
+        border-radius: 999px;
+      }
+
+      .notes-toggle {
+        appearance: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.82rem;
+        color: var(--text-dim);
+        text-decoration: underline;
+        padding: 0;
+      }
+
+      .notes-toggle:hover {
+        color: var(--text-mute);
+      }
+
+      .release-notes {
+        white-space: pre-wrap;
+        font-family: inherit;
+        font-size: 0.85rem;
+        color: var(--text-mute);
+        background: #00000030;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 12px 14px;
+        margin: 0 0 16px;
+        max-height: 220px;
+        overflow-y: auto;
       }
 
       /* The activate button is our own <button>, slotted into the web
@@ -199,7 +245,7 @@
   <body>
     <div class="wrap">
       <header>
-        <div class="logo-dot"><img src="static/logo.jpg" alt="Unique ESP32 Flasher logo" /></div>
+        <div class="logo-dot"><img src="static/logo.png" alt="Unique ESP32 Flasher logo" /></div>
         <h1>Unique ESP32 Flasher</h1>
       </header>
       <p class="sub">
@@ -223,13 +269,18 @@
         }
       </script>
 
-      <div class="card">
+      <div class="card" data-repo="UniqueDroid/pfsense-status-esp32">
         <h2>pfSense Status</h2>
         <p>
           Live pfSense WAN/gateway status, system load and traffic on a TFT
           display.
           <a href="https://github.com/UniqueDroid/pfsense-status-esp32">Source &amp; docs</a>
         </p>
+        <div class="version-row">
+          <span class="version-badge">Checking latest version…</span>
+          <button class="notes-toggle" type="button" hidden>Release notes</button>
+        </div>
+        <pre class="release-notes" hidden></pre>
         <esp-web-install-button manifest="manifests/pfsense-status-esp32.json">
           <button class="flash-btn" slot="activate">Install pfSense Status</button>
           <span slot="unsupported">Your browser does not support Web Serial. Use Chrome or Edge on desktop.</span>
@@ -237,13 +288,18 @@
         </esp-web-install-button>
       </div>
 
-      <div class="card">
+      <div class="card" data-repo="UniqueDroid/fritzbox-status-esp32">
         <h2>FRITZ!Box Status</h2>
         <p>
           Live FRITZ!Box WAN/gateway status, traffic and connection quality
           on a TFT display.
           <a href="https://github.com/UniqueDroid/fritzbox-status-esp32">Source &amp; docs</a>
         </p>
+        <div class="version-row">
+          <span class="version-badge">Checking latest version…</span>
+          <button class="notes-toggle" type="button" hidden>Release notes</button>
+        </div>
+        <pre class="release-notes" hidden></pre>
         <esp-web-install-button manifest="manifests/fritzbox-status-esp32.json">
           <button class="flash-btn" slot="activate">Install FRITZ!Box Status</button>
           <span slot="unsupported">Your browser does not support Web Serial. Use Chrome or Edge on desktop.</span>
@@ -257,5 +313,36 @@
         Powered by JanGadget.
       </p>
     </div>
+    <script>
+      document.querySelectorAll(".card[data-repo]").forEach(async (card) => {
+        const repo = card.dataset.repo;
+        const badge = card.querySelector(".version-badge");
+        const toggle = card.querySelector(".notes-toggle");
+        const notes = card.querySelector(".release-notes");
+        try {
+          const res = await fetch(`https://api.github.com/repos/${repo}/releases/latest`);
+          if (!res.ok) throw new Error("bad response");
+          const data = await res.json();
+          badge.textContent = `Latest: ${data.tag_name}`;
+          const body = (data.body || "").trim();
+          if (body) {
+            notes.textContent = body;
+            toggle.hidden = false;
+            toggle.addEventListener("click", () => {
+              const isHidden = notes.hasAttribute("hidden");
+              if (isHidden) {
+                notes.removeAttribute("hidden");
+                toggle.textContent = "Hide release notes";
+              } else {
+                notes.setAttribute("hidden", "");
+                toggle.textContent = "Release notes";
+              }
+            });
+          }
+        } catch (e) {
+          badge.textContent = "Version unavailable";
+        }
+      });
+    </script>
   </body>
 </html>
