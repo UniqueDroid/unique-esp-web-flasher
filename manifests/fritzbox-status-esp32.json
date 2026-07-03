@@ -7,10 +7,10 @@
     {
       "chipFamily": "ESP32-S3",
       "parts": [
-        { "path": "https://github.com/UniqueDroid/fritzbox-status-esp32/releases/latest/download/fritzbox-status-esp32-lilygo-t-display-s3-bootloader.bin", "offset": 0 },
-        { "path": "https://github.com/UniqueDroid/fritzbox-status-esp32/releases/latest/download/fritzbox-status-esp32-lilygo-t-display-s3-partitions.bin", "offset": 32768 },
+        { "path": "../firmware/fritzbox-status-esp32/bootloader.bin", "offset": 0 },
+        { "path": "../firmware/fritzbox-status-esp32/partitions.bin", "offset": 32768 },
         { "path": "../firmware/boot_app0.bin", "offset": 57344 },
-        { "path": "https://github.com/UniqueDroid/fritzbox-status-esp32/releases/download/v0.2.10/fritzbox-status-esp32-lilygo-t-display-s3-v0.2.10.bin", "offset": 65536 }
+        { "path": "../firmware/fritzbox-status-esp32/firmware.bin", "offset": 65536 }
       ]
     }
   ]

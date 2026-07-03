@@ -1,0 +1,44 @@
+name: Sync firmware from releases
+
+on:
+  schedule:
+    - cron: "0 */3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download latest binaries (bootloader/partitions/firmware)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          sync_repo () {
+            local repo="$1"
+            local dest="firmware/$2"
+            mkdir -p "$dest"
+            gh release download --repo "$repo" -p "*-bootloader.bin" -O "$dest/bootloader.bin" --clobber
+            gh release download --repo "$repo" -p "*-partitions.bin" -O "$dest/partitions.bin" --clobber
+            gh release download --repo "$repo" -p "*-lilygo-t-display-s3-v*.bin" -O "$dest/firmware.bin" --clobber
+            gh release view --repo "$repo" --json tagName -q .tagName > "$dest/VERSION"
+          }
+          sync_repo UniqueDroid/pfsense-status-esp32 pfsense-status-esp32
+          sync_repo UniqueDroid/fritzbox-status-esp32 fritzbox-status-esp32
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add firmware/
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "chore: sync firmware binaries from latest releases"
+            git push
+          fi
