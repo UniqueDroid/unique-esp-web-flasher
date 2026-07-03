@@ -1,8 +1,11 @@
-# UniqueDroid ESP32 Flasher
+# Unique ESP32 Web Flasher
 
 A browser-based flasher for [pfsense-status-esp32](https://github.com/UniqueDroid/pfsense-status-esp32) and [fritzbox-status-esp32](https://github.com/UniqueDroid/fritzbox-status-esp32) - flash a LilyGO T-Display S3 (blank or already running the firmware) straight from Chrome/Edge over USB, no PlatformIO or IDE install required.
 
 Built on [ESP Web Tools](https://github.com/esphome/esp-web-tools) (Apache-2.0), the same browser-flashing library used by ESPHome, Home Assistant and other ESP32 projects (including Bruce's own web launcher).
+
+Link Unique ESP32 Web Flasher
+https://uniquedroid.github.io/unique-esp-web-flasher
 
 ## How it works
 
