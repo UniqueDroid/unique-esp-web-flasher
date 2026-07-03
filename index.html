@@ -10,73 +10,199 @@
       src="https://cdn.jsdelivr.net/npm/esp-web-tools@10/dist/web/install-button.js"
     ></script>
     <style>
+      :root {
+        /* Placeholder palette - swap once the project logo is in. */
+        --accent: #2ac7d8;
+        --accent-2: #6c5ce7;
+        --bg: #0d1015;
+        --bg-grad: #141a24;
+        --surface: #171c24;
+        --surface-hover: #1d2430;
+        --border: #262f3d;
+        --text: #e7edf5;
+        --text-dim: #8e9bac;
+        --text-mute: #aab6c4;
+        --warn: #f5b942;
+        --ok: #4ade80;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
       body {
         font-family:
           -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
           Ubuntu, sans-serif;
         margin: 0;
         padding: 0;
-        line-height: 1.5;
-        background: #101318;
-        color: #dde7f2;
+        line-height: 1.55;
+        color: var(--text);
+        background: radial-gradient(
+            ellipse 900px 500px at 50% -10%,
+            var(--bg-grad),
+            transparent
+          )
+          var(--bg);
+        min-height: 100vh;
       }
+
       .wrap {
-        max-width: 640px;
+        max-width: 680px;
         margin: 0 auto;
-        padding: 32px 20px 60px;
+        padding: 56px 20px 70px;
       }
+
+      header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 8px;
+      }
+
+      .logo-dot {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        flex: none;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+      }
+
       h1 {
-        font-size: 1.6rem;
-        margin-bottom: 4px;
+        font-size: 1.7rem;
+        letter-spacing: -0.02em;
+        margin: 0;
       }
+
       .sub {
-        color: #8e9bac;
-        margin-top: 0;
-        margin-bottom: 32px;
+        color: var(--text-dim);
+        margin: 14px 0 36px;
+        max-width: 52ch;
       }
+
       .card {
-        background: #171c24;
-        border: 1px solid #293342;
-        border-radius: 10px;
-        padding: 20px 22px;
-        margin-bottom: 20px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 22px 24px;
+        margin-bottom: 18px;
+        transition:
+          border-color 0.15s ease,
+          background 0.15s ease;
       }
+
+      .card:hover {
+        border-color: #33405490;
+        background: var(--surface-hover);
+      }
+
       .card h2 {
-        margin-top: 0;
-        margin-bottom: 6px;
-        font-size: 1.15rem;
+        margin: 0 0 4px;
+        font-size: 1.2rem;
+        letter-spacing: -0.01em;
       }
+
       .card p {
-        color: #aab6c4;
-        margin-top: 0;
+        color: var(--text-mute);
+        margin: 0 0 18px;
+        font-size: 0.95rem;
       }
+
       .card a {
-        color: #2ac7d8;
+        color: var(--accent);
+        text-decoration: none;
       }
-      esp-web-install-button {
-        --esp-tools-button-color: #2ac7d8;
+
+      .card a:hover {
+        text-decoration: underline;
       }
+
+      /* The activate button is our own <button>, slotted into the web
+         component - fully styleable, not limited to its CSS vars. */
+      .flash-btn {
+        appearance: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.98rem;
+        font-weight: 600;
+        color: #0d1015;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        padding: 12px 26px;
+        border-radius: 999px;
+        box-shadow: 0 6px 18px -6px #2ac7d866;
+        transition:
+          transform 0.12s ease,
+          box-shadow 0.12s ease,
+          filter 0.12s ease;
+      }
+
+      .flash-btn:hover {
+        filter: brightness(1.08);
+        box-shadow: 0 8px 22px -6px #2ac7d888;
+        transform: translateY(-1px);
+      }
+
+      .flash-btn:active {
+        transform: translateY(0);
+        filter: brightness(0.96);
+      }
+
+      .flash-btn::before {
+        content: "\26A1";
+        margin-right: 8px;
+      }
+
+      .banner {
+        display: none;
+        border-radius: 16px;
+        padding: 18px 22px;
+        margin-bottom: 22px;
+        border: 1px solid #f5b94255;
+        background: #f5b94214;
+      }
+
+      .banner h2 {
+        margin: 0 0 4px;
+        font-size: 1.05rem;
+        color: var(--warn);
+      }
+
+      .banner p {
+        margin: 0;
+        color: var(--text-mute);
+        font-size: 0.92rem;
+      }
+
       .req {
-        margin-top: 40px;
-        font-size: 0.9rem;
-        color: #8e9bac;
+        margin-top: 36px;
+        font-size: 0.85rem;
+        color: var(--text-dim);
       }
+
       .req a {
-        color: #2ac7d8;
+        color: var(--accent);
       }
     </style>
   </head>
   <body>
     <div class="wrap">
-      <h1>UniqueDroid ESP32 Flasher</h1>
+      <header>
+        <div class="logo-dot">⚡</div>
+        <h1>UniqueDroid ESP32 Flasher</h1>
+      </header>
       <p class="sub">
         Flash a fresh (or already-flashed) ESP32 board directly from this
-        page - no PlatformIO or IDE required. Works in Chrome/Edge over
-        USB.
+        page - no PlatformIO or IDE required. Just Chrome/Edge and a USB
+        cable.
       </p>
 
-      <div id="compat-warning" class="card" style="display: none; border-color: #f5b942">
-        <h2 style="color: #f5b942">Not supported here</h2>
+      <div id="compat-warning" class="banner">
+        <h2>Not supported here</h2>
         <p>
           This needs the Web Serial API, which only exists in desktop
           Chrome or Edge (not on phones/tablets, and not in Firefox or
@@ -94,10 +220,11 @@
         <h2>pfSense Status</h2>
         <p>
           Live pfSense WAN/gateway status, system load and traffic on a TFT
-          display. <a href="https://github.com/UniqueDroid/pfsense-status-esp32">Source &amp; docs</a>
+          display.
+          <a href="https://github.com/UniqueDroid/pfsense-status-esp32">Source &amp; docs</a>
         </p>
         <esp-web-install-button manifest="manifests/pfsense-status-esp32.json">
-          <button slot="activate">Install pfSense Status</button>
+          <button class="flash-btn" slot="activate">Install pfSense Status</button>
           <span slot="unsupported">Your browser does not support Web Serial. Use Chrome or Edge on desktop.</span>
           <span slot="not-allowed">This page must be served over HTTPS (or localhost) to flash a device.</span>
         </esp-web-install-button>
@@ -107,10 +234,11 @@
         <h2>FRITZ!Box Status</h2>
         <p>
           Live FRITZ!Box WAN/gateway status, traffic and connection quality
-          on a TFT display. <a href="https://github.com/UniqueDroid/fritzbox-status-esp32">Source &amp; docs</a>
+          on a TFT display.
+          <a href="https://github.com/UniqueDroid/fritzbox-status-esp32">Source &amp; docs</a>
         </p>
         <esp-web-install-button manifest="manifests/fritzbox-status-esp32.json">
-          <button slot="activate">Install FRITZ!Box Status</button>
+          <button class="flash-btn" slot="activate">Install FRITZ!Box Status</button>
           <span slot="unsupported">Your browser does not support Web Serial. Use Chrome or Edge on desktop.</span>
           <span slot="not-allowed">This page must be served over HTTPS (or localhost) to flash a device.</span>
         </esp-web-install-button>
