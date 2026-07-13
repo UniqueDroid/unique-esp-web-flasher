@@ -33,11 +33,19 @@ jobs:
 
           # PicoRead's release assets are unprefixed (bootloader.bin/partitions.bin/firmware.bin
           # directly) since that repo only targets one board - no glob needed.
-          mkdir -p firmware/picoread
-          gh release download --repo UniqueDroid/PicoRead -p "bootloader.bin" -O firmware/picoread/bootloader.bin --clobber
-          gh release download --repo UniqueDroid/PicoRead -p "partitions.bin" -O firmware/picoread/partitions.bin --clobber
-          gh release download --repo UniqueDroid/PicoRead -p "firmware.bin" -O firmware/picoread/firmware.bin --clobber
-          gh release view --repo UniqueDroid/PicoRead --json tagName -q .tagName > firmware/picoread/VERSION
+          # Soft-fail until the first real release exists there (release.yml only
+          # just started publishing real GitHub Releases instead of CI artifacts) -
+          # `set -e` would otherwise abort this whole step, taking pfsense/fritzbox
+          # sync down with it.
+          if gh release view --repo UniqueDroid/PicoRead >/dev/null 2>&1; then
+            mkdir -p firmware/picoread
+            gh release download --repo UniqueDroid/PicoRead -p "bootloader.bin" -O firmware/picoread/bootloader.bin --clobber
+            gh release download --repo UniqueDroid/PicoRead -p "partitions.bin" -O firmware/picoread/partitions.bin --clobber
+            gh release download --repo UniqueDroid/PicoRead -p "firmware.bin" -O firmware/picoread/firmware.bin --clobber
+            gh release view --repo UniqueDroid/PicoRead --json tagName -q .tagName > firmware/picoread/VERSION
+          else
+            echo "No PicoRead release yet - skipping"
+          fi
 
       - name: Commit and push if changed
         run: |
