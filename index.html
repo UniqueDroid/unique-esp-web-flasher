@@ -311,8 +311,28 @@
         </esp-web-install-button>
       </div>
 
+      <div class="card" data-repo="UniqueDroid/PicoRead">
+        <h2>PicoRead</h2>
+        <p>
+          Personal fork of CrossPoint Reader, open-source e-reader firmware
+          for the Xteink X3/X4.
+          <a href="https://github.com/UniqueDroid/PicoRead">Source &amp; docs</a>
+        </p>
+        <div class="version-row">
+          <span class="version-badge">Checking latest version…</span>
+          <button class="notes-toggle" type="button" hidden>Release notes</button>
+        </div>
+        <pre class="release-notes" hidden></pre>
+        <esp-web-install-button manifest="manifests/picoread.json">
+          <button class="flash-btn" slot="activate">Install PicoRead</button>
+          <span slot="unsupported">Your browser does not support Web Serial. Use Chrome or Edge on desktop.</span>
+          <span slot="not-allowed">This page must be served over HTTPS (or localhost) to flash a device.</span>
+        </esp-web-install-button>
+      </div>
+
       <p class="req">
-        Currently supports the LilyGO T-Display S3 board. Powered by
+        Supports the LilyGO T-Display S3 (pfSense/FRITZ!Box Status) and the
+        Xteink X3/X4 (PicoRead) boards. Powered by
         <a href="https://github.com/esphome/esp-web-tools">ESP Web Tools</a>.
         Powered by JanGadget.
       </p>

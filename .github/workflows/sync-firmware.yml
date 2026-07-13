@@ -31,6 +31,14 @@ jobs:
           sync_repo UniqueDroid/pfsense-status-esp32 pfsense-status-esp32
           sync_repo UniqueDroid/fritzbox-status-esp32 fritzbox-status-esp32
 
+          # PicoRead's release assets are unprefixed (bootloader.bin/partitions.bin/firmware.bin
+          # directly) since that repo only targets one board - no glob needed.
+          mkdir -p firmware/picoread
+          gh release download --repo UniqueDroid/PicoRead -p "bootloader.bin" -O firmware/picoread/bootloader.bin --clobber
+          gh release download --repo UniqueDroid/PicoRead -p "partitions.bin" -O firmware/picoread/partitions.bin --clobber
+          gh release download --repo UniqueDroid/PicoRead -p "firmware.bin" -O firmware/picoread/firmware.bin --clobber
+          gh release view --repo UniqueDroid/PicoRead --json tagName -q .tagName > firmware/picoread/VERSION
+
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
