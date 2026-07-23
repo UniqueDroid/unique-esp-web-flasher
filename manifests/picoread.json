@@ -1,6 +1,6 @@
 {
   "name": "PicoRead",
-  "version": "v1.4.1",
+  "version": "1.4.1",
   "new_install_prompt_erase": true,
   "funding_url": "https://github.com/UniqueDroid/PicoRead",
   "builds": [
