@@ -328,6 +328,16 @@
           <span slot="unsupported">Your browser does not support Web Serial. Use Chrome or Edge on desktop.</span>
           <span slot="not-allowed">This page must be served over HTTPS (or localhost) to flash a device.</span>
         </esp-web-install-button>
+        <p class="req" style="margin-top: 14px">
+          Got your Xteink from AliExpress or another third-party reseller and USB flashing won't connect? Those
+          units often ship USB-locked. No computer needed:
+          download
+          <a href="https://github.com/UniqueDroid/PicoRead/releases/latest/download/update.bin">update.bin</a>,
+          copy it to the SD card's root folder, then hold <strong>Power + Up</strong> (top-left button on X3)
+          while powering on - the OEM bootloader flashes it straight from the card. See
+          <a href="https://github.com/UniqueDroid/PicoRead#usb-locked-devices">USB-locked devices</a> in the
+          PicoRead docs for details.
+        </p>
       </div>
 
       <p class="req">
