@@ -340,9 +340,30 @@
         </p>
       </div>
 
+      <div class="card" data-repo="UniqueDroid/PicoWatch">
+        <h2>PicoWatch</h2>
+        <p>
+          Personal fork of Watchy, an open-source E-Paper smartwatch - BLE
+          notifications, weather, and more. Works on both PCB V3 (ESP32-S3)
+          and real Watchy V2 hardware, auto-detected from the connected chip.
+          <a href="https://github.com/UniqueDroid/PicoWatch">Source &amp; docs</a>
+        </p>
+        <div class="version-row">
+          <span class="version-badge">Checking latest version…</span>
+          <button class="notes-toggle" type="button" hidden>Release notes</button>
+        </div>
+        <pre class="release-notes" hidden></pre>
+        <esp-web-install-button manifest="manifests/picowatch.json">
+          <button class="flash-btn" slot="activate">Install PicoWatch</button>
+          <span slot="unsupported">Your browser does not support Web Serial. Use Chrome or Edge on desktop.</span>
+          <span slot="not-allowed">This page must be served over HTTPS (or localhost) to flash a device.</span>
+        </esp-web-install-button>
+      </div>
+
       <p class="req">
-        Supports the LilyGO T-Display S3 (pfSense/FRITZ!Box Status) and the
-        Xteink X3/X4 (PicoRead) boards. Powered by
+        Supports the LilyGO T-Display S3 (pfSense/FRITZ!Box Status), the
+        Xteink X3/X4 (PicoRead), and PCB V3/Watchy V2 (PicoWatch) boards.
+        Powered by
         <a href="https://github.com/esphome/esp-web-tools">ESP Web Tools</a>.
         Powered by JanGadget.
       </p>

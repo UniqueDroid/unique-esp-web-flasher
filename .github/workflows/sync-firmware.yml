@@ -47,6 +47,27 @@ jobs:
             echo "No PicoRead release yet - skipping"
           fi
 
+          # PicoWatch ships two hardware variants (V2/ESP32-PICO-D4 and
+          # PCB V3/ESP32-S3) in ONE release, distinguished by the
+          # "AllFaces-v20.ino*"/"AllFaces-v30.ino*" filename suffix that its
+          # release workflows use (many other watchfaces get built too, but
+          # only AllFaces - the picker sketch bundling all of them - gets
+          # flashed here). Same soft-fail-until-first-release pattern as
+          # PicoRead above.
+          if gh release view --repo UniqueDroid/PicoWatch >/dev/null 2>&1; then
+            mkdir -p firmware/picowatch-v2 firmware/picowatch-v3
+            gh release download --repo UniqueDroid/PicoWatch -p "AllFaces-v20.ino.bootloader.bin" -O firmware/picowatch-v2/bootloader.bin --clobber
+            gh release download --repo UniqueDroid/PicoWatch -p "AllFaces-v20.ino.partitions.bin" -O firmware/picowatch-v2/partitions.bin --clobber
+            gh release download --repo UniqueDroid/PicoWatch -p "AllFaces-v20.ino.bin" -O firmware/picowatch-v2/firmware.bin --clobber
+            gh release view --repo UniqueDroid/PicoWatch --json tagName -q .tagName > firmware/picowatch-v2/VERSION
+            gh release download --repo UniqueDroid/PicoWatch -p "AllFaces-v30.ino.bootloader.bin" -O firmware/picowatch-v3/bootloader.bin --clobber
+            gh release download --repo UniqueDroid/PicoWatch -p "AllFaces-v30.ino.partitions.bin" -O firmware/picowatch-v3/partitions.bin --clobber
+            gh release download --repo UniqueDroid/PicoWatch -p "AllFaces-v30.ino.bin" -O firmware/picowatch-v3/firmware.bin --clobber
+            gh release view --repo UniqueDroid/PicoWatch --json tagName -q .tagName > firmware/picowatch-v3/VERSION
+          else
+            echo "No PicoWatch release yet - skipping"
+          fi
+
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"

@@ -1,0 +1,26 @@
+{
+  "name": "PicoWatch",
+  "version": "v1.1.0",
+  "new_install_prompt_erase": true,
+  "funding_url": "https://github.com/UniqueDroid/PicoWatch",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        { "path": "../firmware/picowatch-v2/bootloader.bin", "offset": 4096 },
+        { "path": "../firmware/picowatch-v2/partitions.bin", "offset": 32768 },
+        { "path": "../firmware/boot_app0.bin", "offset": 57344 },
+        { "path": "../firmware/picowatch-v2/firmware.bin", "offset": 65536 }
+      ]
+    },
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        { "path": "../firmware/picowatch-v3/bootloader.bin", "offset": 0 },
+        { "path": "../firmware/picowatch-v3/partitions.bin", "offset": 32768 },
+        { "path": "../firmware/boot_app0.bin", "offset": 57344 },
+        { "path": "../firmware/picowatch-v3/firmware.bin", "offset": 65536 }
+      ]
+    }
+  ]
+}
